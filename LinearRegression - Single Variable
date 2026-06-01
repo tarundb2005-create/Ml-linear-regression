@@ -1,0 +1,34 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+import numpy as np
+
+df = pd.read_csv('homeprices.csv')  #usig pandas we read the csv file
+
+df.head()    #head is used to see first 5 data to analyse how the data are stored in a dataset
+
+plt.scatter(df.area,df.price,marker = '+') #using scatter plot
+
+reg = linear_model.LinearRegression()      #using linear regression model
+
+#train dataset using linear regression
+
+reg.fit(df[['area']], df['price'])           #fiting the data in 2d arry and try to avoid the series data
+
+reg.predict([[4030]])  #predicting the 4030sq feet price
+
+reg.coef_
+reg.intercept_
+
+Pred = reg.coef_*4030+reg.intercept_
+Pred
+
+if Pred == reg.predict([[4030]]):
+  print('the model predicted correct')
+else:
+  print('the model predicted wrong')
+
+plt.scatter(df.area,df.price,marker = '+')
+plt.plot(df.area,reg.predict(df[['area']]),color='red')
+plt.xlabel('area')
+plt.ylabel('price')
